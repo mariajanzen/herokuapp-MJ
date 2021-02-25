@@ -7,30 +7,22 @@ import org.openqa.selenium.interactions.Actions;
 
 import java.util.List;
 
+import static com.codeborne.selenide.Selenide.$$;
+
 /**
  * Hovers Page
  */
-public class HoversPage extends Page {
+public class HoversPage {
 
-    public HoversPage(WebDriver driver) {
-        super(driver);
-    }
-
-    private static final String HOVER_URL = BASE_URL + "/hovers";
-
-    public void goToHoversPage() {
-        driver.navigate().to(HOVER_URL);
-    }
+    private static final By imgElement = By.tagName("img");
+    private static final By textElement = By.tagName("h5");
 
     public void hoverOverProfilePics(int index) {
-        Actions builder = new Actions(driver);
-        List<WebElement> hoverElements = driver.findElements(By.tagName("img"));
-        builder.moveToElement(hoverElements.get(index)).click().perform();
+        $$(imgElement).get(index).hover();
     }
 
     public boolean isUsernamePresent(String username, int index) {
-        List<WebElement> textElements = driver.findElements(By.tagName("h5"));
-        String elementsText = textElements.get(index).getText();
+        String elementsText = $$(textElement).get(index).getText();
         return elementsText.contains(username);
     }
 }
